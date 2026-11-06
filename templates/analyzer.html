@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}AI Resume Analyzer | AI Job Portal{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">
+            AI Resume <span class="accent">Analyzer</span>
+        </h1>
+
+        <p class="text-muted">
+            Analyze your resume, identify your skills,
+            and discover suitable job opportunities.
+        </p>
+    </div>
+
+    <!-- Resume Upload Form -->
+    <div class="card shadow-sm p-4 mx-auto mb-5"
+         style="max-width: 850px;">
+
+        <h4 class="fw-bold mb-3">Upload or Paste Your Resume</h4>
+
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST"
+              action="{{ url_for('analyzer') }}"
+              enctype="multipart/form-data">
+
+            <div class="mb-4">
+                <label class="form-label">
+                    Upload Resume (PDF or TXT)
+                </label>
+
+                <input type="file"
+                       name="resume_file"
+                       class="form-control"
+                       accept=".pdf,.txt">
+
+                <small class="text-muted">
+                    Maximum file size: 5 MB.
+                </small>
+            </div>
+
+            <div class="text-center text-muted mb-3">
+                — OR —
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">
+                    Paste Resume Text
+                </label>
+
+                <textarea name="resume_text"
+                          class="form-control"
+                          rows="8"
+                          placeholder="Paste your resume content here..."></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit"
+                        class="btn btn-primary btn-lg">
+                    Analyze My Resume
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Analysis Results -->
+    {% if analysis %}
+
+    <div class="card shadow-sm p-4 mb-5">
+
+        <h2 class="fw-bold mb-4">Analysis Results</h2>
+
+        <div class="row text-center mb-4">
+
+            <div class="col-md-6 mb-3">
+                <div class="border rounded p-4 h-100">
+                    <h3 class="accent">
+                        {{ analysis.word_count }}
+                    </h3>
+                    <p class="mb-0">Words in Your Resume</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="border rounded p-4 h-100">
+                    <h3 class="accent">
+                        {{ analysis.skills|length }}
+                    </h3>
+                    <p class="mb-0">Skills Identified</p>
+                </div>
+            </div>
+
+        </div>
+
+        <h4 class="fw-bold">Detected Skills</h4>
+
+        {% if analysis.skills %}
+            {% for skill in analysis.skills %}
+                <span class="badge bg-primary me-2 mb-2 p-2">
+                    {{ skill }}
+                </span>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">
+                No predefined skills were detected.
+                Try adding your technical skills to your resume.
+            </p>
+        {% endif %}
+
+        <hr class="my-4">
+
+        <h4 class="fw-bold">Suggestions for Improvement</h4>
+
+        {% if analysis.suggestions %}
+            <ul>
+                {% for suggestion in analysis.suggestions %}
+                    <li class="mb-2">{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">
+                No suggestions are available.
+            </p>
+        {% endif %}
+
+    </div>
+
+    <!-- Job Recommendations -->
+    <div class="card shadow-sm p-4">
+
+        <h2 class="fw-bold mb-4">Recommended Jobs</h2>
+
+        {% if recommendations %}
+
+            {% for job in recommendations %}
+
+                <div class="border rounded p-4 mb-3">
+
+                    <div class="d-flex justify-content-between
+                                align-items-start flex-wrap">
+
+                        <div>
+                            <h4 class="fw-bold">
+                                {{ job.title }}
+                            </h4>
+
+                            <p class="text-muted mb-2">
+                                {{ job.company }} · {{ job.location }}
+                            </p>
+                        </div>
+
+                        <span class="badge bg-success p-2">
+                            {{ job.match_score }}% Match
+                        </span>
+
+                    </div>
+
+                    <p>{{ job.description }}</p>
+
+                    {% if job.matched_skills %}
+                        <p class="mb-2">
+                            <strong>Matching Skills:</strong>
+                            {{ job.matched_skills|join(', ') }}
+                        </p>
+                    {% endif %}
+
+                    {% if job.missing_skills %}
+                        <p class="mb-0">
+                            <strong>Skills to Learn:</strong>
+                            {{ job.missing_skills|join(', ') }}
+                        </p>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="text-muted">
+                No matching jobs were found.
+                Try improving your resume or adding more skills.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

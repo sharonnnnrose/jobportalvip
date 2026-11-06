@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Builder | AI Job Portal{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">Build Your <span class="accent">Resume</span></h1>
+        <p class="text-muted">
+            Enter your details to create a professional resume.
+        </p>
+    </div>
+
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 850px;">
+
+        <form method="POST" action="{{ url_for('resume_builder') }}">
+
+            <h4 class="mb-3">Personal Information</h4>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" name="name"
+                           class="form-control"
+                           placeholder="Enter your full name"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" name="email"
+                           class="form-control"
+                           placeholder="you@example.com"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" name="phone"
+                           class="form-control"
+                           placeholder="Enter your phone number">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Location</label>
+                    <input type="text" name="location"
+                           class="form-control"
+                           placeholder="City, State">
+                </div>
+            </div>
+
+            <hr>
+
+            <h4 class="mb-3">Professional Details</h4>
+
+            <div class="mb-3">
+                <label class="form-label">Professional Summary *</label>
+                <textarea name="summary"
+                          class="form-control"
+                          rows="4"
+                          placeholder="Write a short introduction about yourself..."
+                          required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Education *</label>
+                <textarea name="education"
+                          class="form-control"
+                          rows="3"
+                          placeholder="Degree, college, graduation year..."
+                          required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Technical Skills *</label>
+                <textarea name="skills"
+                          class="form-control"
+                          rows="3"
+                          placeholder="Python, Java, HTML, CSS, SQL..."
+                          required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Projects</label>
+                <textarea name="projects"
+                          class="form-control"
+                          rows="3"
+                          placeholder="Project name, technologies used, and your contribution..."></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Experience / Internships</label>
+                <textarea name="experience"
+                          class="form-control"
+                          rows="3"
+                          placeholder="Internships, work experience, or relevant activities..."></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Generate My Resume
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

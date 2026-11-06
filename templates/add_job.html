@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Add a Job | AI Job Portal{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">
+            Add a <span class="accent">Job Opportunity</span>
+        </h1>
+
+        <p class="text-muted">
+            Add job details to help candidates discover new opportunities.
+        </p>
+    </div>
+
+    <div class="card shadow-sm p-4 mx-auto"
+         style="max-width: 800px;">
+
+        <form method="POST" action="{{ url_for('add_job') }}">
+
+            <div class="mb-3">
+                <label class="form-label">Job Title *</label>
+
+                <input type="text"
+                       name="title"
+                       class="form-control"
+                       placeholder="e.g. Python Developer"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Company Name *</label>
+
+                <input type="text"
+                       name="company"
+                       class="form-control"
+                       placeholder="Enter company name"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Job Location *</label>
+
+                <input type="text"
+                       name="location"
+                       class="form-control"
+                       placeholder="e.g. Chennai or Remote"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Required Skills *</label>
+
+                <input type="text"
+                       name="skills"
+                       class="form-control"
+                       placeholder="Python, SQL, Flask, HTML"
+                       required>
+
+                <small class="text-muted">
+                    Separate each skill with a comma.
+                </small>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Job Description *</label>
+
+                <textarea name="description"
+                          class="form-control"
+                          rows="5"
+                          placeholder="Describe the role and responsibilities..."
+                          required></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit"
+                        class="btn btn-primary btn-lg">
+                    Add Job
+                </button>
+
+                <a href="{{ url_for('job_list') }}"
+                   class="btn btn-outline-secondary btn-lg ms-2">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

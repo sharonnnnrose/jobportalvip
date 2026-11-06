@@ -1,0 +1,6 @@
+Flask
+Werkzeug
+PyMuPDF
+reportlab
+scikit-learn
+sentence-transformers
